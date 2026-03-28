@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Tests - run-page</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    #results {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 14px;
+    }
+    .result {
+      padding: 4px 0;
+    }
+    .pass {
+      color: #22c55e;
+    }
+    .fail {
+      color: #ef4444;
+    }
+    .summary {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #e5e5e5;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Example Tests</h1>
+  <p>This page demonstrates <code>run-page</code> in action. Open your console to see the output!</p>
+  <div id="results"></div>
+
+  <script>
+    let failures = 0;
+    const resultsEl = document.getElementById('results');
+
+    function assert(condition, message) {
+      const status = condition ? '✔' : '✘';
+      const result = `${status} ${message}`;
+      const className = condition ? 'pass' : 'fail';
+
+      // Log to console (captured by run-page)
+      console.log(result);
+
+      // Show in page
+      const div = document.createElement('div');
+      div.className = `result ${className}`;
+      div.textContent = result;
+      resultsEl.appendChild(div);
+
+      if (!condition) failures++;
+    }
+
+    // Run tests
+    console.log('Running tests...\n');
+
+    // Basic assertions
+    assert(1 + 1 === 2, 'Math: 1 + 1 equals 2');
+    assert(typeof document !== 'undefined', 'DOM: document object exists');
+    assert([1, 2, 3].length === 3, 'Arrays: length property works');
+    assert('hello'.toUpperCase() === 'HELLO', 'Strings: toUpperCase works');
+
+    // Type checks
+    assert(typeof {} === 'object', 'Types: object type check');
+    assert(typeof [] === 'object', 'Types: array type check');
+    assert(typeof 42 === 'number', 'Types: number type check');
+    assert(typeof 'test' === 'string', 'Types: string type check');
+
+    // DOM operations
+    assert(document.querySelector('h1') !== null, 'DOM: can query elements');
+    assert(document.getElementById('results') !== null, 'DOM: can get element by ID');
+
+    // Let's add one intentional failure to show what it looks like
+    assert(false === true, 'Logic: intentional failure for demo');
+
+    // More passing tests
+    assert(null === null, 'Equality: null equals null');
+    assert(undefined === undefined, 'Equality: undefined equals undefined');
+
+    // Show summary
+    const total = document.querySelectorAll('.result').length;
+    const passed = total - failures;
+    const summaryDiv = document.createElement('div');
+    summaryDiv.className = 'summary';
+    summaryDiv.innerHTML = `
+      <div>Tests: ${total}</div>
+      <div class="pass">Passed: ${passed}</div>
+      ${failures > 0 ? `<div class="fail">Failed: ${failures}</div>` : ''}
+    `;
+    resultsEl.appendChild(summaryDiv);
+
+    console.log(`\nTests completed: ${passed}/${total} passed`);
+
+    // Signal completion to run-page
+    console.log(`DONE:${failures}`);
+  </script>
+</body>
+</html>

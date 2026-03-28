@@ -1,0 +1,6 @@
+example/
+.gitignore
+.git
+tsconfig.json
+*.log
+.DS_Store

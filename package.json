@@ -1,0 +1,37 @@
+{
+  "name": "run-page",
+  "version": "1.0.0",
+  "description": "Run a web page in headless Chrome and capture console output",
+  "main": "cli.js",
+  "bin": {
+    "run-page": "cli.js"
+  },
+  "scripts": {
+    "test": "node cli.js example/test.html",
+    "typecheck": "tsc --noEmit --allowJs --checkJs cli.js"
+  },
+  "keywords": [
+    "test",
+    "headless",
+    "browser",
+    "console",
+    "chrome",
+    "puppeteer",
+    "testing",
+    "cli",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "puppeteer": "^24.40.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
